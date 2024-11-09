@@ -9,7 +9,7 @@ import messages from "./Routes/chat.js";
 
 const app = express() 
 app.use(cors({
-    origin: ["https://employee-management-system-kd74a410p.vercel.app"],
+    origin: ["https://employee-management-system-hes9rfw20.vercel.app"],
     methods: ['GET', 'POST', 'PUT', "DELETE"],
     credentials: true
 }))
