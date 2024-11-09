@@ -6,3 +6,16 @@ https://ems-backend-p8j8.onrender.com
 
 local server
 http://localhost:3000
+
+
+Host: sql12.freesqldatabase.com
+Database name: sql12743709
+Database user: sql12743709
+Database password: ipWBVLf5Wf
+Port number: 3306
+
+to edit or create sql table (freesqldatabase.com)
+https://www.phpmyadmin.co/db_designer.php?db=sql12743709
+
+
+https://www.freesqldatabase.com/account/
