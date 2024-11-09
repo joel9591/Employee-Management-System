@@ -7,6 +7,7 @@ import cookieParser from "cookie-parser";
 import "./birthday_feature/notificationScheduler.js";
 import messages from "./Routes/chat.js";
 
+const PORT = process.env.PORT || 3000;
 const app = express() 
 app.use(cors({
     origin: ["https://employee-management-system-hes9rfw20.vercel.app"],
@@ -39,6 +40,6 @@ app.get('/verify',verifyUser, (req, res)=> {
     return res.json({Status: true, role: req.role, id: req.id})
 } )
 
-app.listen(3000, () => {
+app.listen(PORT, () => {
     console.log("Server is running")
 })
