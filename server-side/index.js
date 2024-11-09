@@ -4,6 +4,8 @@ import { adminRouter } from "./Routes/AdminRoute.js";
 import { EmployeeRouter } from "./Routes/EmployeeRoute.js";
 import Jwt from "jsonwebtoken";
 import cookieParser from "cookie-parser";
+import "./birthday_feature/notificationScheduler.js";
+import messages from "./Routes/chat.js";
 
 const app = express() 
 app.use(cors({
@@ -15,6 +17,8 @@ app.use(express.json())
 app.use(cookieParser())
 app.use('/auth', adminRouter)
 app.use('/employee', EmployeeRouter)
+app.use("/messages", messages);
+app.use('/admin', adminRouter);
 app.use(express.static('Public'))
 
 const verifyUser = (req, res, next) => {

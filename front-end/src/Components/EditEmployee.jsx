@@ -341,7 +341,7 @@ const EditEmployee = () => {
               className="btn btn-primary w-100"
               onClick={handleUpdateClick} // Call the new handler on click
             >
-              Edit Employee
+              Update details
             </button>
           </div>
         </form>

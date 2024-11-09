@@ -1,0 +1,46 @@
+@media (max-width: 768px) {
+  .w-25 {
+    width: 100% !important; /* Full width for smaller screens */
+  }
+}
+
+body {
+  background-color: #ffffff; /* Light background */
+  color: #000000; /* Light text color */
+  transition: background-color 0.3s, color 0.3s; /* Smooth transition */
+}
+
+/* Example for buttons and other elements */
+.nav-link {
+  color: #000000; /* Light text color */
+}
+
+.nav-link:focus, button:focus {
+  outline: 2px solid #007bff; /* Outline for better visibility */
+  outline-offset: 2px;
+}
+
+.bg-dark {
+  background-color: #ffffff !important; /* Override Bootstrap */
+}
+
+.text-white {
+  color: #000000 !important; /* Override Bootstrap */
+}
+
+.dashboard {
+  background-color: #ffffff; /* Light background */
+  color: #000000; /* Light text color */
+}
+
+.dashboard .nav-link {
+  color: #000000; /* Light text color */
+}
+
+.dashboard .bg-dark {
+  background-color: #ffffff !important; /* Override Bootstrap */
+}
+
+.dashboard .text-white {
+  color: #000000 !important; /* Override Bootstrap */
+}

@@ -1,11 +1,11 @@
 import axios from "axios";
 import React, { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-useEffect
 
 const Start = () => {
     const navigate = useNavigate()
   axios.defaults.withCredentials = true;
+
   useEffect(() => {
     axios.get('http://localhost:3000/verify')
     .then(result => {
@@ -31,6 +31,7 @@ const Start = () => {
             Admin
           </button>
         </div>
+        <p>Want to be an admin? <span style={{ color: 'yellow', cursor: 'pointer' }} onClick={() => navigate('/signup')}>Signup!</span></p>
       </div>
     </div>
   );

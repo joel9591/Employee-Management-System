@@ -37,7 +37,7 @@ const EmployeeDetail = () => {
                 <h3>Date of Birth: {employee.dob}</h3>
             </div>
             <div>
-                <button className='btn btn-primary me-2'>Edit</button>
+                <button className='btn btn-primary me-2'>Edit</button> 
                 <button className='btn btn-danger' onClick={handleLogout}>Logout</button>
             </div>
         </div>
