@@ -10,7 +10,7 @@ const Category = () => {
     }, []);
 
     const fetchCategories = () => {
-        axios.get('http://localhost:3000/auth/category')
+        axios.get(`${process.env.REACT_APP_API_URL}/auth/category`)
             .then(result => {
                 if (result.data.Status) {
                     setCategory(result.data.Result);
@@ -22,7 +22,7 @@ const Category = () => {
     };
 
     const handleDelete = (id) => {
-      axios.delete(`http://localhost:3000/auth/delete_category/${id}`)
+      axios.delete(`${process.env.REACT_APP_API_URL}/auth/delete_category/${id}`)
       .then(result => {
           if (result.data.Status) {
               setCategory(category.filter(c => c.id !== id));

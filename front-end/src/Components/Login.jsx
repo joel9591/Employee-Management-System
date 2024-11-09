@@ -14,7 +14,7 @@ const Login = () => {
   const handleSubmit = (event) => {
     event.preventDefault();
     axios
-      .post("http://localhost:3000/auth/adminlogin", values, {
+      .post(`${process.env.REACT_APP_API_URL}/auth/adminlogin`, values, {
         withCredentials: true,
       })
       .then((result) => {

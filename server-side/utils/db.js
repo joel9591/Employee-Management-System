@@ -1,10 +1,11 @@
-import mysql from 'mysql';
+import mysql from 'mysql2';
 
 const con = mysql.createConnection({
-    host: "localhost",
+    host: "mysql.railway.internal",
     user: "root",
-    password: "",
-    database: "employeems"
+    password: "PloOqXeFxtOYQVAbmylhFlJagqgCsPHn",
+    database: "railway",
+    port: 3306 
 });
 
 con.connect((err) => {

@@ -1,0 +1,8 @@
+frontend live link
+https://employee-management-system-kd74a410p.vercel.app
+
+backend live link
+https://ems-backend-p8j8.onrender.com
+
+local server
+http://localhost:3000

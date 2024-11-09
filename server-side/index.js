@@ -9,11 +9,12 @@ import messages from "./Routes/chat.js";
 
 const app = express() 
 app.use(cors({
-    origin: ["http://localhost:5173"],
+    origin: ["https://employee-management-system-kd74a410p.vercel.app"],
     methods: ['GET', 'POST', 'PUT', "DELETE"],
     credentials: true
 }))
 app.use(express.json())
+app.use(cors(corsOptions));
 app.use(cookieParser())
 app.use('/auth', adminRouter)
 app.use('/employee', EmployeeRouter)

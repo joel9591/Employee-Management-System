@@ -11,7 +11,7 @@ const Dashboard = () => {
 
   const handleLogout = async () => {
     try {
-      const result = await axios.get("http://localhost:3000/auth/logout");
+      const result = await axios.get("https://ems-backend-p8j8.onrender.com/auth/logout");
       if (result.data.Status) {
         localStorage.removeItem("valid");
         localStorage.removeItem("adminId"); // Clear adminId on logout
@@ -130,7 +130,7 @@ const Dashboard = () => {
 
   const handleLogout = async () => {
     try {
-      const result = await axios.get("http://localhost:3000/auth/logout");
+      const result = await axios.get(`${process.env.REACT_APP_API_URL}/auth/logout`);
       if (result.data.Status) {
         localStorage.removeItem("valid");
         localStorage.removeItem("adminId"); // Clear adminId on logout

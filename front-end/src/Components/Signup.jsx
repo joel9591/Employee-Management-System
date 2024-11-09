@@ -37,7 +37,7 @@ const Signup = () => {
     data.append("name", formData.name);
 
     axios
-      .post("http://localhost:3000/auth/signup", data)
+      .post(`${process.env.REACT_APP_API_URL}/auth/signup`, data)
       .then((response) => {
         console.log("Signup successful:", response.data);
         setSuccessMessage("Signup successful!"); // Set success message

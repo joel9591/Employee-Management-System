@@ -20,7 +20,7 @@ const Profile = () => {
     const fetchAdmin = async () => {
       try {
         const response = await axios.get(
-          `http://localhost:3000/admin/${adminId}`,
+          `${process.env.REACT_APP_API_URL}/admin/${adminId}`,
           {
             headers: {
               Authorization: `Bearer ${localStorage.getItem("token")}`,
@@ -51,7 +51,7 @@ const Profile = () => {
       <div className="d-flex justify-content-center flex-column align-items-center mt-3">
         {admin.image && (
           <img
-            src={`http://localhost:3000/Public/Images/${admin.image}`}
+            src={`${process.env.REACT_APP_API_URL}/Public/Images/${admin.image}`}
             className="emp_det_image"
             alt="Admin"
           />

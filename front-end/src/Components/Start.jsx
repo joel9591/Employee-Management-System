@@ -7,7 +7,7 @@ const Start = () => {
   axios.defaults.withCredentials = true;
 
   useEffect(() => {
-    axios.get('http://localhost:3000/verify')
+    axios.get(`${process.env.REACT_APP_API_URL}/verify`)
     .then(result => {
       if(result.data.Status) {
         if(result.data.role === "admin") {

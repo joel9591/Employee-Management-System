@@ -193,7 +193,7 @@ const EditEmployee = () => {
 
   useEffect(() => {
     axios
-      .get("http://localhost:3000/auth/category")
+      .get(`${process.env.REACT_APP_API_URL}/auth/category`)
       .then((result) => {
         if (result.data.Status) {
           setCategory(result.data.Result);
@@ -204,7 +204,7 @@ const EditEmployee = () => {
       .catch((err) => console.log(err));
 
     axios
-      .get("http://localhost:3000/auth/employee/" + id)
+      .get(`${process.env.REACT_APP_API_URL}/auth/employee/` + id)
       .then((result) => {
         setEmployee({
           name: result.data.Result[0].name,
@@ -220,7 +220,7 @@ const EditEmployee = () => {
 
   const handleUpdateClick = () => {
     axios
-      .put("http://localhost:3000/auth/edit_employee/" + id, employee)
+      .put(`${process.env.REACT_APP_API_URL}/auth/edit_employee/` + id, employee)
       .then((result) => {
         if (result.data.Status) {
           console.log("Update successful");

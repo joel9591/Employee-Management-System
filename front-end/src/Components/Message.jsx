@@ -12,7 +12,7 @@ const Message = () => {
   useEffect(() => {
     if (receiverId) {
       axios
-        .get(`http://localhost:3000/messages/${userId}/${receiverId}`)
+        .get(`${process.env.REACT_APP_API_URL}/messages/${userId}/${receiverId}`)
         .then((res) => {
           if (res.data.Status) {
             setMessages(res.data.Messages);
@@ -30,7 +30,7 @@ const Message = () => {
   const sendMessage = () => {
     if (messageText.trim() !== "") {
       axios
-        .post("http://localhost:3000/messages/send", {
+        .post(`${process.env.REACT_APP_API_URL}/messages/send`, {
           sender_id: userId,
           receiver_id: receiverId,
           message_text: messageText,
