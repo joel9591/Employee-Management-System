@@ -19,3 +19,8 @@ https://www.phpmyadmin.co/db_designer.php?db=sql12743709
 
 
 https://www.freesqldatabase.com/account/
+
+live links
+frontend - employee-management-git-55b0f3-joelstalin76-gmailcoms-projects.vercel.app
+
+backend - https://employee-management-backend-flhu.onrender.com
