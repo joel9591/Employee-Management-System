@@ -10,7 +10,7 @@ import messages from "./Routes/chat.js";
 const PORT = process.env.PORT || 3000;
 const app = express() 
 app.use(cors({
-    origin: ["https://employee-management-system-gray.vercel.app/"],
+    origin: "https://employee-management-system-gray.vercel.app",
     methods: ['GET', 'POST', 'PUT', "DELETE"],
     credentials: true
 }))
