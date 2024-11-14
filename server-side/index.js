@@ -12,11 +12,11 @@ const app = express();
 
 // Set up CORS with specific configuration
 app.use(cors({
-    origin: "https://employee-management-system-gray.vercel.app",
+    origin: "*",
     methods: ['GET', 'POST', 'PUT', "DELETE"],
     credentials: true
 }));
-
+//https://employee-management-system-gray.vercel.app
 app.use(express.json());
 app.use(cookieParser());
 app.use('/auth', adminRouter);
