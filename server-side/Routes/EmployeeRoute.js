@@ -19,7 +19,7 @@ router.post("/employee_login", (req, res) => {
                     "jwt_secret_key",
                     { expiresIn: "1d" }
                 );
-                res.cookie('token', token)
+                res.cookie('token', token, { httpOnly: true, secure: true, sameSite: "Strict" })
                 return res.json({ loginStatus: true, id: result[0].id });
             }
         })
