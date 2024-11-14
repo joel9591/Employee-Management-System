@@ -78,7 +78,7 @@ router.post("/adminlogin", (req, res) => {
                         process.env.JWT_SECRET,
                         { expiresIn: "1d" }
                     );
-                    res.cookie("token", token, { httpOnly: true, secure: false, sameSite: "Strict" });
+                    res.cookie("token", token, { httpOnly: true, secure: process.env.NODE_ENV === "production", sameSite: "Strict" });
                     return res.status(200).json({ loginStatus: true });
                 } else {
                     return res.status(401).json({ loginStatus: false, Error: "Wrong password" });

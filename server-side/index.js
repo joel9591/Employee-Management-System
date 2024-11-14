@@ -12,17 +12,11 @@ const app = express();
 
 // Set up CORS with specific configuration
 app.use(cors({
-    origin: (origin, callback) => {
-        if (origin && origin.includes(".vercel.app")) {
-            callback(null, true);
-        } else {
-            callback(new Error("Not allowed by CORS"));
-        }
-    },
-    methods: ['GET', 'POST', 'PUT', "DELETE"],
+    origin: ["https://employee-management-system-gray.vercel.app", "employee-management-git-55b0f3-joelstalin76-gmailcoms-projects.vercel.app", "employee-management-system-5xrtzxra2.vercel.app"], // Include all allowed origins
+    methods: ['GET', 'POST', 'PUT', 'DELETE'],
     credentials: true
 }));
-//https://employee-management-system-gray.vercel.app
+
 app.use(express.json());
 app.use(cookieParser());
 app.use('/auth', adminRouter);
