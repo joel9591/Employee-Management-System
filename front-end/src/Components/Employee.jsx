@@ -8,7 +8,7 @@ const Employee = () => {
 
   useEffect(() => {
     axios
-      .get(`${process.env.REACT_APP_API_URL}/auth/employee`)
+      .get("https://employee-management-backend-flhu.onrender.com/auth/employee")
       .then((result) => {
         if (result.data.Status) {
           setEmployee(result.data.Result);
@@ -20,7 +20,7 @@ const Employee = () => {
   }, []);
   const handleDelete = (id) => {
     axios
-      .delete(`${process.env.REACT_APP_API_URL}/auth/delete_employee/` + id)
+      .delete("https://employee-management-backend-flhu.onrender.com/auth/delete_employee/" + id)
       .then((result) => {
         if (result.data.Status) {
           setEmployee(employee.filter((e) => e.id !== id));
@@ -57,7 +57,7 @@ const Employee = () => {
                 <td>{e.name}</td>
                 <td>
                   <img
-                    src={`${process.env.REACT_APP_API_URL}/Images/` + e.image}
+                    src={"https://employee-management-backend-flhu.onrender.com/Images/" + e.image}
                     className="employee_image"
                   />
                 </td>

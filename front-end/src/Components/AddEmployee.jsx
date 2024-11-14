@@ -18,7 +18,7 @@ const AddEmployee = () => {
 
   useEffect(() => {
     axios
-      .get(`${process.env.REACT_APP_API_URL}/auth/category`)
+      .get("https://employee-management-backend-flhu.onrender.com/auth/category")
       .then((result) => {
         if (result.data.Status) {
           setCategory(result.data.Result);
@@ -42,7 +42,7 @@ const AddEmployee = () => {
     formData.append("category_id", employee.category_id);
 
     axios
-      .post(`${process.env.REACT_APP_API_URL}/auth/add_employee`, formData)
+      .post("https://employee-management-backend-flhu.onrender.com/auth/add_employee", formData)
       .then((result) => {
         if (result.data.Status) {
           navigate("/dashboard/employee");

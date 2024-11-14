@@ -14,7 +14,7 @@ const Login = () => {
   const handleSubmit = (event) => {
     event.preventDefault();
     axios
-      .post(`${process.env.REACT_APP_API_URL}/auth/adminlogin`, values, {
+      .post("https://employee-management-backend-flhu.onrender.com/auth/adminlogin", values, {
         withCredentials: true,
       })
       .then((result) => {

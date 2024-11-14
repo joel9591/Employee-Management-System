@@ -37,7 +37,7 @@ const Signup = () => {
     data.append("name", formData.name);
 
     axios
-      .post(`${process.env.REACT_APP_API_URL}/auth/signup`, data)
+      .post("https://employee-management-backend-flhu.onrender.com/auth/signup", data)
       .then((response) => {
         console.log("Signup successful:", response.data);
         setSuccessMessage("Signup successful!"); // Set success message

@@ -13,7 +13,7 @@ const EmployeeLogin = () => {
     axios.defaults.withCredentials = true;
     const handleSubmit = (event) => {
         event.preventDefault()
-        axios.post(`${process.env.REACT_APP_API_URL}/employee/employee_login`, values)
+        axios.post("https://employee-management-backend-flhu.onrender.com/employee/employee_login", values)
         .then(result => {
             if(result.data.loginStatus) {
                 localStorage.setItem("valid", true)

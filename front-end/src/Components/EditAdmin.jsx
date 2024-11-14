@@ -12,7 +12,7 @@ const EditAdmin = () => {
     const fetchAdmin = async () => {
       try {
         const response = await axios.get(
-          `${process.env.REACT_APP_API_URL}/auth/admins/${adminId}` // Adjust this if the route is different
+          "https://employee-management-backend-flhu.onrender.com/auth/admins/${adminId}" // Adjust this if the route is different
         );
         if (response.data.Status) {
           setAdminName(response.data.Result.name);
@@ -39,7 +39,7 @@ const EditAdmin = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.put(`${process.env.REACT_APP_API_URL}/auth/edit/${adminId}`, { // Adjust URL to match backend
+      const response = await axios.put(`https://employee-management-backend-flhu.onrender.com/auth/edit/${adminId}`, { // Adjust URL to match backend
         name: adminName,
         email: adminEmail,
       });

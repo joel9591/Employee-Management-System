@@ -193,7 +193,7 @@ const EditEmployee = () => {
 
   useEffect(() => {
     axios
-      .get(`${process.env.REACT_APP_API_URL}/auth/category`)
+      .get("https://employee-management-backend-flhu.onrender.com/auth/category")
       .then((result) => {
         if (result.data.Status) {
           setCategory(result.data.Result);
@@ -204,7 +204,7 @@ const EditEmployee = () => {
       .catch((err) => console.log(err));
 
     axios
-      .get(`${process.env.REACT_APP_API_URL}/auth/employee/` + id)
+      .get("https://employee-management-backend-flhu.onrender.com/auth/employee/" + id)
       .then((result) => {
         setEmployee({
           name: result.data.Result[0].name,
@@ -220,7 +220,7 @@ const EditEmployee = () => {
 
   const handleUpdateClick = () => {
     axios
-      .put(`${process.env.REACT_APP_API_URL}/auth/edit_employee/` + id, employee)
+      .put("https://employee-management-backend-flhu.onrender.com/auth/edit_employee/" + id, employee)
       .then((result) => {
         if (result.data.Status) {
           console.log("Update successful");
