@@ -22,7 +22,7 @@ app.use(cookieParser());
 app.use('/auth', adminRouter);
 app.use('/employee', EmployeeRouter);
 app.use("/messages", messages);
-app.use('/admin', adminRouter);
+//app.use('/admin', adminRouter);
 app.use(express.static('Public'));
 
 // Middleware to verify the user

@@ -21,25 +21,6 @@ const storage = multer.diskStorage({
 
 const upload = multer({ storage });
 
-/*function authenticateToken(req, res, next) {
-    const authHeader = req.headers['authorization'];
-    const token = authHeader && authHeader.split(' ')[1]; // Extract token after 'Bearer'
-
-    if (!token) {
-        console.log("No token provided");
-        return res.sendStatus(401); // Unauthorized
-    }
-
-    jwt.verify(token, "jwt_secret_key", (err, user) => {
-        if (err) {
-            console.error("Token verification failed:", err);
-            return res.sendStatus(403); // Forbidden
-        }
-        req.user = user; // Attach user data to request object
-        console.log("Decoded User:", user);
-        next(); // Proceed to the next middleware or route handler
-    });
-}*/
 
 function authenticateToken(req, res, next) {
     const token = req.headers['authorization']?.split(' ')[1];
@@ -144,39 +125,6 @@ router.delete('/delete_admin/:id', (req, res) => {
         return res.json({ Status: true, Message: "Admin deleted successfully", Result: result });
     });
 });
-
-
-
-// Admin details route
-// AdminRoute.js
-/*router.get('/admin/:id', authenticateToken, (req, res) => {
-    const adminId = req.params.id;
-    if (!Number.isInteger(parseInt(adminId))) {
-        return res.status(400).json({ message: "Invalid admin ID" });
-    }
-    
-    const sql = "SELECT * FROM admin WHERE id = ?";
-    con.query(sql, [adminId], (err, results) => {
-        if (err) {
-            console.error("Database error:", err);
-            return res.status(500).json({ message: "Internal server error" });
-        }
-        if (results.length === 0) {
-            return res.status(404).json({ message: "Admin not found" });
-        }
-        res.json(results);
-    });
-});*/
-/*router.get('/admin/:id', authenticateToken, (req, res) => {
-    const adminId = req.params.id;
-    if (isNaN(adminId)) return sendResponse(res, 400, "Invalid admin ID");
-    const sql = "SELECT * FROM admin WHERE id = ?";
-    con.query(sql, [adminId], (err, results) => {
-        if (err) return sendResponse(res, 500, "Internal server error");
-        if (results.length === 0) return sendResponse(res, 404, "Admin not found");
-        sendResponse(res, 200, "Admin details fetched successfully", results[0]);
-    });
-});*/
 
 router.get('/admin/:id', authenticateToken, (req, res) => {
     const adminId = req.params.id;
