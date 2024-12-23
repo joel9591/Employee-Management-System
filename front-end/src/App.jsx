@@ -17,11 +17,8 @@ import PrivateRoute from "./Components/PrivateRoute";
 import Message from "./Components/Message";
 import Signup from "./Components/Signup";
 import EditAdmin from "./Components/EditAdmin";
-import { config } from "dotenv";
 
 
-
-config();
 
 function App() {
   return (
