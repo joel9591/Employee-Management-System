@@ -16,5 +16,5 @@ const getTodaysBirthdays = () => {
     });
 };
 
-// Export the function
+
 export { getTodaysBirthdays };

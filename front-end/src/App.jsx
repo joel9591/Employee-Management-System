@@ -17,6 +17,11 @@ import PrivateRoute from "./Components/PrivateRoute";
 import Message from "./Components/Message";
 import Signup from "./Components/Signup";
 import EditAdmin from "./Components/EditAdmin";
+import { config } from "dotenv";
+
+
+
+config();
 
 function App() {
   return (
@@ -27,16 +32,9 @@ function App() {
         <Route path="/adminlogin" element={<Login />} />
         <Route path="/employee_login" element={<EmployeeLogin />} />
         <Route path="/employee_detail/:id" element={<EmployeeDetail />} />
-        <Route
-          path="/dashboard"
-          element={
-            <PrivateRoute>
-              <Dashboard />
-            </PrivateRoute>
-          }
-        >
+        <Route path="/dashboard" element={ <PrivateRoute> <Dashboard /> </PrivateRoute>}>
           <Route index element={<Home />} />
-          <Route path="/dashboard/admin-profile/:adminId" element={<Profile />} />
+          <Route path="/dashboard/profile/:adminId" element={<Profile />} />
           <Route path="employee" element={<Employee />} />
           <Route path="category" element={<Category />} />
           <Route path="messages" element={<Message />} />

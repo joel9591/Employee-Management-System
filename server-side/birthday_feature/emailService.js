@@ -19,7 +19,6 @@ const sendEmail = (to, subject, text) => {
         text,
     };
 
-    // Wrap in a promise to ensure it returns a proper promise
     return new Promise((resolve, reject) => {
         transporter.sendMail(mailOptions, (error, info) => {
             if (error) {

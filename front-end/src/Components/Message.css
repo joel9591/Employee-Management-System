@@ -50,3 +50,8 @@
   border: none;
   cursor: pointer;
 }
+
+
+.custom-width {
+  width: 83.5vw;
+}

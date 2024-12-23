@@ -1,6 +1,7 @@
 import { useParams, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { useEffect, useState } from "react";
+import "bootstrap-icons/font/bootstrap-icons.css";
 
 const EditAdmin = () => {
   const { adminId } = useParams();
@@ -12,7 +13,7 @@ const EditAdmin = () => {
     const fetchAdmin = async () => {
       try {
         const response = await axios.get(
-          "https://employee-management-backend-flhu.onrender.com/auth/admins/${adminId}" // Adjust this if the route is different
+          `${process.env.REACT_APP_API_URL}/auth/admins/${adminId}` 
         );
         if (response.data.Status) {
           setAdminName(response.data.Result.name);
@@ -39,12 +40,17 @@ const EditAdmin = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.put(`https://employee-management-backend-flhu.onrender.com/auth/edit/${adminId}`, { // Adjust URL to match backend
-        name: adminName,
-        email: adminEmail,
-      });
+      const response = await axios.put(
+        `${process.env.REACT_APP_API_URL}/auth/edit/${adminId}`,
+        {
+          // Adjust URL to match backend
+          name: adminName,
+          email: adminEmail,
+        }
+      );
 
-      if (response.data.message === 'Admin updated successfully') { // Check message instead of Status
+      if (response.data.message === "Admin updated successfully") {
+        // Check message instead of Status
         alert("Admin updated successfully");
         navigate("/dashboard");
       } else {
@@ -57,12 +63,35 @@ const EditAdmin = () => {
   };
 
   return (
-    <form onSubmit={handleSubmit}>
-      <input type="text" value={adminName} onChange={handleNameChange} placeholder="Admin Name" />
-      <input type="email" value={adminEmail} onChange={handleEmailChange} placeholder="Admin Email" />
-      <button type="submit">Update Admin</button>
-    </form>
+    <div className="d-flex justify-content-center " style={{paddingTop: '10%'}}>
+      <form onSubmit={handleSubmit} className="text-white d-flex flex-column p-4 rounded border border-light" style={{ height: '40vh', width: '30vw', backgroundColor: "#343a40"}}>
+        <div className="mb-3 w-100">
+          <label htmlFor="Admin-name" className="form-label">Admin name</label>
+          <input
+            type="text"
+            value={adminName}
+            onChange={handleNameChange}
+            placeholder="Admin Name"
+            className="form-control text-start"
+          />
+        </div>
+        <div className="mb-3 w-100">
+          <label htmlFor="Admin-email" className="form-label">Admin email</label>
+          <input
+            type="email"
+            value={adminEmail}
+            onChange={handleEmailChange}
+            placeholder="Admin Email"
+            className="form-control text-start"
+          />
+        </div>
+        <div className="w-100 text-center">
+          <button type="submit" className="btn btn-primary">Update Admin</button>
+        </div>
+      </form>
+    </div>
   );
+  
 };
 
 export default EditAdmin;

@@ -1,17 +1,16 @@
-import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
+import axios from "axios";
+import "bootstrap-icons/font/bootstrap-icons.css";
 
 const Profile = () => {
   const [admin, setAdmin] = useState({});
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  const { adminId } = useParams(); // Gets adminId from the URL
-
-  console.log("Received Admin ID from URL:", adminId); // Debugging line
+  const { adminId } = useParams();
 
   useEffect(() => {
-    if (!adminId) {
+    if (!adminId || isNaN(adminId)) {
       setError("Invalid admin ID.");
       setLoading(false);
       return;
@@ -20,18 +19,11 @@ const Profile = () => {
     const fetchAdmin = async () => {
       try {
         const response = await axios.get(
-          `https://employee-management-backend-flhu.onrender.com/admin/${adminId}`,
-          {
-            headers: {
-              Authorization: `Bearer ${localStorage.getItem("token")}`,
-            },
-          }
+          `${process.env.REACT_APP_API_URL}/auth/profile/${adminId}`
         );
-        console.log("Fetched admin data:", response.data); // Log fetched data
-        setAdmin(response.data[0] || response.data);
+        setAdmin(response.data.data || {});
       } catch (err) {
         setError("Failed to fetch admin details.");
-        console.error("Error fetching admin:", err); // Log error details
       } finally {
         setLoading(false);
       }
@@ -40,28 +32,27 @@ const Profile = () => {
     fetchAdmin();
   }, [adminId]);
 
-  if (loading) return <p>page is Loading...</p>;
+  if (loading) return <p>Loading...</p>;
   if (error) return <p>{error}</p>;
 
   return (
-    <div>
-      <div className="p-2 d-flex justify-content-center shadow">
-        <h4>Admin Management System</h4>
-      </div>
-      <div className="d-flex justify-content-center flex-column align-items-center mt-3">
-        {admin.image && (
+    <div className="container text-center mt-5">
+      <h4>Admin Management System</h4>
+      <div className="d-flex flex-column align-items-center">
+        <div className="mb-4">
           <img
-            src={`https://employee-management-backend-flhu.onrender.com/Public/Images/${admin.image}`}
-            className="emp_det_image"
+            src={`${process.env.REACT_APP_API_URL}/Images/` + admin.image}
             alt="Admin"
+            className="img-fluid rounded-circle shadow"
+            style={{ maxWidth: "250px", height: "250px" }}
           />
-        )}
-        <div className="d-flex align-items-center flex-column mt-5">
-          <h3>Name: {admin.name}</h3>
-          <h3>Email: {admin.email}</h3>
-          <h3>Date of Birth: {admin.dob}</h3>
-          <h3>Address: {admin.address}</h3>
         </div>
+        <h3 className="text-white">Name: {admin.name}</h3>
+        <h3 className="text-white">Email: {admin.email}</h3>
+        <h3 className="text-white">
+          Date of Birth: {new Date(admin.dob).toLocaleDateString("en-CA")}
+        </h3>
+        <h3 className="text-white">Address: {admin.address}</h3>
       </div>
     </div>
   );

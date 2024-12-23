@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import "./Signup.css";
 
 const Signup = () => {
   const navigate = useNavigate();
@@ -13,7 +14,6 @@ const Signup = () => {
     name: "",
   });
 
-  // State for success and error messages
   const [successMessage, setSuccessMessage] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
 
@@ -37,37 +37,40 @@ const Signup = () => {
     data.append("name", formData.name);
 
     axios
-      .post("https://employee-management-backend-flhu.onrender.com/auth/signup", data)
+      .post(`${process.env.REACT_APP_API_URL}/auth/signup`, data, {
+        withCredentials: true,
+      })
       .then((response) => {
         console.log("Signup successful:", response.data);
-        setSuccessMessage("Signup successful!"); // Set success message
-        setErrorMessage(""); // Clear any previous error messages
+        setSuccessMessage("Signup successful!"); 
+        setErrorMessage(""); 
         setTimeout(() => {
-          navigate("/adminlogin"); // Redirect after 1 seconds
+          navigate("/adminlogin"); 
         }, 1000);
       })
       .catch((error) => {
         console.error("There was an error!", error);
         setErrorMessage(
           error.response?.data.Error || "Signup failed. Please try again."
-        ); // Set error message
-        setSuccessMessage(""); // Clear any previous success messages
+        ); 
+        setSuccessMessage(""); 
       });
   };
 
   return (
     <div className="d-flex justify-content-center align-items-center vh-100 signup">
-      <div className="p-4 rounded w-45 border">
-        <h2 className="text-center mb-4">Admin Signup</h2>
-
-        {/* Conditional rendering of success message */}
+      <div className="p-4 rounded w-45 border border-secondary">
+        <h2
+          className="text-center mb-4 fw-bold"
+          style={{ fontFamily: "'Montserrat', sans-serif" }}
+        >
+          Admin Signup
+        </h2>
         {successMessage && (
           <div className="alert alert-success" role="alert">
             {successMessage}
           </div>
         )}
-
-        {/* Conditional rendering of error message */}
         {errorMessage && (
           <div className="alert alert-danger" role="alert">
             {errorMessage}
@@ -76,7 +79,9 @@ const Signup = () => {
 
         <form onSubmit={handleSubmit} encType="multipart/form-data">
           <div className="form-group mb-3">
-            <label>Name</label>
+            <label>
+              <strong>Name</strong>
+            </label>
             <input
               type="text"
               name="name"
@@ -86,7 +91,9 @@ const Signup = () => {
             />
           </div>
           <div className="form-group mb-3">
-            <label>Email</label>
+            <label>
+              <strong>Email</strong>
+            </label>
             <input
               type="email"
               name="email"
@@ -96,7 +103,9 @@ const Signup = () => {
             />
           </div>
           <div className="form-group mb-3">
-            <label>Password</label>
+            <label>
+              <strong>Password</strong>
+            </label>
             <input
               type="password"
               name="password"
@@ -106,7 +115,9 @@ const Signup = () => {
             />
           </div>
           <div className="form-group mb-3">
-            <label>Image</label>
+            <label>
+              <strong>Image</strong>
+            </label>
             <input
               type="file"
               name="image"
@@ -116,7 +127,9 @@ const Signup = () => {
             />
           </div>
           <div className="form-group mb-3">
-            <label>Address</label>
+            <label>
+              <strong>Address</strong>
+            </label>
             <input
               type="text"
               name="address"
@@ -126,7 +139,9 @@ const Signup = () => {
             />
           </div>
           <div className="form-group mb-3">
-            <label>Date of Birth</label>
+            <label>
+              <strong>Date of Birth</strong>
+            </label>
             <input
               type="date"
               name="dob"

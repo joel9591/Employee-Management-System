@@ -1,13 +1,15 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import "bootstrap/dist/css/bootstrap.min.css";
+
 
 const Home = () => {
   const [adminTotal, setAdminTotal] = useState(0);
   const [employeeTotal, setEmployeeTotal] = useState(0);
   const [salaryTotal, setSalaryTotal] = useState(0);
   const [admins, setAdmins] = useState([]);
-  const navigate = useNavigate(); // To navigate to the edit page
+  const navigate = useNavigate();
 
   useEffect(() => {
     adminCount();
@@ -17,7 +19,7 @@ const Home = () => {
   }, []);
 
   const adminRecords = () => {
-    axios.get("https://employee-management-backend-flhu.onrender.com/auth/admin_records").then((result) => {
+    axios.get(`${process.env.REACT_APP_API_URL}/auth/admin_records`).then((result) => {
       if (result.data.Status) {
         setAdmins(result.data.Result);
       } else {
@@ -27,7 +29,7 @@ const Home = () => {
   };
 
   const adminCount = () => {
-    axios.get("https://employee-management-backend-flhu.onrender.com/auth/admin_count").then((result) => {
+    axios.get(`${process.env.REACT_APP_API_URL}/auth/admin_count`).then((result) => {
       if (result.data.Status) {
         setAdminTotal(result.data.Result[0].admin);
       }
@@ -35,7 +37,7 @@ const Home = () => {
   };
 
   const employeeCount = () => {
-    axios.get("https://employee-management-backend-flhu.onrender.com/auth/employee_count").then((result) => {
+    axios.get(`${process.env.REACT_APP_API_URL}/auth/employee_count`).then((result) => {
       if (result.data.Status) {
         setEmployeeTotal(result.data.Result[0].employee);
       }
@@ -43,7 +45,7 @@ const Home = () => {
   };
 
   const salaryCount = () => {
-    axios.get("https://employee-management-backend-flhu.onrender.com/auth/salary_count").then((result) => {
+    axios.get(`${process.env.REACT_APP_API_URL}/auth/salary_count`).then((result) => {
       if (result.data.Status) {
         setSalaryTotal(result.data.Result[0].salaryOFEmp);
       } else {
@@ -53,7 +55,7 @@ const Home = () => {
   };
 
   const handleEdit = (adminId) => {
-    navigate(`/dashboard/edit-admin/${adminId}`); // Navigate to EditAdmin page
+    navigate(`/dashboard/edit-admin/${adminId}`); 
   };
 
   const handleDelete = (adminId) => {
@@ -68,11 +70,11 @@ const Home = () => {
   const deleteAdmin = async (adminId) => {
     try {
       const response = await axios.delete(
-        "https://employee-management-backend-flhu.onrender.com/auth/delete_admin/${adminId}" // Updated endpoint
+        `${process.env.REACT_APP_API_URL}/auth/delete_admin/${adminId}` 
       );
       if (response.data.Status) {
         alert("Admin deleted successfully");
-        adminRecords(); // Refresh the admin list
+        adminRecords(); 
       } else {
         alert("Failed to delete admin: " + response.data.Error);
       }
@@ -82,10 +84,15 @@ const Home = () => {
     }
   };
 
+  const formatDate = (date) => {
+    const newDate = new Date(date);
+    return newDate.toISOString().split('T')[0]; 
+  };
+
   return (
     <div>
       <div className="container p-3 d-flex flex-wrap justify-content-around dashboard-summary">
-        <div className="card px-3 pt-2 pb-3 shadow-sm">
+        <div className="card px-5 pt-2 pb-3 shadow-sm bg-dark text-white border-secondary">
           <h4 className="text-center">Admin</h4>
           <hr />
           <div className="d-flex justify-content-between">
@@ -93,7 +100,7 @@ const Home = () => {
             <h5>{adminTotal}</h5>
           </div>
         </div>
-        <div className="card px-3 pt-2 pb-3 shadow-sm">
+        <div className="card px-5 pt-2 pb-3 shadow-sm bg-dark text-white border-secondary">
           <h4 className="text-center">Employee</h4>
           <hr />
           <div className="d-flex justify-content-between">
@@ -101,7 +108,7 @@ const Home = () => {
             <h5>{employeeTotal}</h5>
           </div>
         </div>
-        <div className="card px-3 pt-2 pb-3 shadow-sm">
+        <div className="card px-5 pt-2 pb-3 shadow-sm bg-dark text-white border-secondary">
           <h4 className="text-center">Salary</h4>
           <hr />
           <div className="d-flex justify-content-between">
@@ -110,41 +117,42 @@ const Home = () => {
           </div>
         </div>
       </div>
-      <div className="mt-4 px-5 pt-3">
-        <h3>List of Admins</h3>
-        <table className="table">
-          <thead>
-            <tr>
-              <th>Name</th>
-              <th>Email</th>
-              <th>Action</th>
-            </tr>
-          </thead>
-          <tbody>
-            {admins.map((a) => (
-              <tr key={a.id}>
-                <td>{a.name}</td>
-                <td>{a.email}</td>
-                <td>
-                  <div className="d-flex">
-                    <button
-                      className="btn btn-info btn-sm me-2"
-                      onClick={() => handleEdit(a.id)}
-                    >
-                      Edit
-                    </button>
-                    <button
-                      className="btn btn-warning btn-sm"
-                      onClick={() => handleDelete(a.id)}
-                    >
-                      Delete
-                    </button>
-                  </div>
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
+      <div className="mt-4 px-5 pt-3 ">
+        <h3 className="text-white ">List of Admins</h3>
+        <table className="table table-striped table-bordered table-dark">
+  <thead className="bg-black text-white">
+    <tr>
+      <th>Name</th>
+      <th>Email</th>
+      <th>DOB</th>
+      <th className="text-center">Action</th>
+    </tr>
+  </thead>
+  <tbody style={{ backgroundColor: "gray", color: "white" }}>
+    {admins.map((a) => (
+      <tr key={a.id}>
+        <td>{a.name}</td>
+        <td>{a.email}</td>
+        <td>{formatDate(a.dob)}</td>
+        <td className="d-flex justify-content-center align-items-center">
+          <button
+            className="btn btn-info btn-sm me-2"
+            onClick={() => handleEdit(a.id)}
+          >
+            Edit
+          </button>
+          <button
+            className="btn btn-warning btn-sm"
+            onClick={() => handleDelete(a.id)}
+          >
+            Delete
+          </button>
+        </td>
+      </tr>
+    ))}
+  </tbody>
+</table>
+
       </div>
     </div>
   );

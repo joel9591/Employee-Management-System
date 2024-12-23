@@ -10,7 +10,7 @@ const Category = () => {
     }, []);
 
     const fetchCategories = () => {
-        axios.get("https://employee-management-backend-flhu.onrender.com/auth/category")
+        axios.get(`${process.env.REACT_APP_API_URL}/auth/category`)
             .then(result => {
                 if (result.data.Status) {
                     setCategory(result.data.Result);
@@ -22,7 +22,7 @@ const Category = () => {
     };
 
     const handleDelete = (id) => {
-      axios.delete(`https://employee-management-backend-flhu.onrender.com/auth/delete_category/${id}`)
+      axios.delete(`${process.env.REACT_APP_API_URL}/auth/delete_category/${id}`)
       .then(result => {
           if (result.data.Status) {
               setCategory(category.filter(c => c.id !== id));
@@ -40,19 +40,19 @@ const Category = () => {
             </div>
             <Link to="/dashboard/add_category" className='btn btn-success'>Add Category</Link>
             <div className='mt-3'>
-                <table className='table'>
+                <table className='table table-dark table-bordered table-striped'>
                     <thead>
                         <tr>
                             <th>Name</th>
-                            <th>Action</th>
+                            <th className='text-center'>Action</th>
                         </tr>
                     </thead>
-                    <tbody>
+                    <tbody >
                         {
                             category.map(c => (
                                 <tr key={c.id}>
                                     <td>{c.name}</td>
-                                    <td>
+                                    <td className='text-center'>
                                         <button
                                             className='btn btn-danger'
                                             onClick={() => handleDelete(c.id)}

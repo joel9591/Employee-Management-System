@@ -1,26 +1,14 @@
 .loginPage {
-  background: url('/employeems.jpeg');
-  background: linear-gradient(rgba(11, 11, 11, 0.5), rgba(10, 10, 10, 0.5)), url("/employeems.jpeg");
+  background: linear-gradient(rgba(11, 11, 11, 0.5), rgba(10, 10, 10, 0.5)), url('/bg.jpg');
   background-position: center;
   background-repeat: no-repeat;
   background-size: 100% 120%;
 }
 
-.signup {
-  background: url('/employeems.jpeg');
-  background: linear-gradient(rgba(11, 11, 11, 0.5), rgba(10, 10, 10, 0.5)), url("/employeems.jpeg");
-  background-position: center;
-  background-repeat: no-repeat;
-  background-size: 100% 120%;
-}
-.signup .form-group label {
-  color: white;
-  font-weight: 300;
-}
 
 
 .loginForm {
-  background-color: rgba(1, 32, 93, 0.6);
+  background-color: rgba(2, 19, 54, 0.6);
   color: white;
 }
 

@@ -1,0 +1,21 @@
+.custom-thead {
+  background-color: black; 
+  color: white; 
+}
+
+.custom-tbody {
+  background-color: gray; 
+  color: white; 
+}
+
+table {
+  border-collapse: collapse; 
+  width: 100%; 
+}
+
+table th,
+table td {
+  border: 1px solid #ddd; 
+  text-align: left; 
+  padding: 8px; 
+}

@@ -1,0 +1,16 @@
+.custom-bg{
+  background-color: rgb(60, 62, 66);
+  margin: 0%;
+}
+
+.comp{
+  color: rgb(199, 195, 198);
+}
+
+.emp-bg{
+  height: 100vh; 
+  width: 100%; 
+  background-color: rgb(60, 62, 66);
+  margin: 0;
+  padding: 0;
+}

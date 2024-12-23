@@ -9,7 +9,6 @@ import 'dotenv/config';
 const router = express.Router();
 
 
-// Image upload
 const storage = multer.diskStorage({
     destination: (req, file, cb) => {
         cb(null, 'Public/Images');
@@ -26,7 +25,7 @@ function authenticateToken(req, res, next) {
     const token = req.headers['authorization']?.split(' ')[1];
     if (!token) return res.sendStatus(401);
 
-    jwt.verify(token, "jwt_secret_key", (err, user) => {
+    jwt.verify(token, process.env.JWT_SECRET, (err, user) => {
         if (err) return res.sendStatus(403);
         req.user = user;
         next();
@@ -35,13 +34,11 @@ function authenticateToken(req, res, next) {
 
 
 
-// Function to handle SQL errors
 const handleSQLError = (err, res, customMessage) => {
     console.error(err);
     return res.json({ Status: false, Error: customMessage || "Query Error" });
 };
 
-// Admin Login
 router.post("/adminlogin", (req, res) => {
     const sql = "SELECT * FROM admin WHERE email = ?";
     con.query(sql, [req.body.email], (err, result) => {
@@ -59,8 +56,11 @@ router.post("/adminlogin", (req, res) => {
                         process.env.JWT_SECRET,
                         { expiresIn: "1d" }
                     );
-                    res.cookie("token", token, { httpOnly: true, secure: process.env.NODE_ENV === "production", sameSite: "Strict" });
-                    return res.status(200).json({ loginStatus: true });
+                    res.cookie("token", token, { httpOnly: true, secure: false });
+                    return res.status(200).json({
+                        loginStatus: true,
+                        adminId: result[0].id, 
+                    });
                 } else {
                     return res.status(401).json({ loginStatus: false, Error: "Wrong password" });
                 }
@@ -71,12 +71,15 @@ router.post("/adminlogin", (req, res) => {
     });
 });
 
-// Admin Signup
+
 router.post("/signup", upload.single("image"), (req, res) => {
     const { email, password, address, dob, name } = req.body;
 
     bcrypt.hash(password, 10, (err, hash) => {
-        if (err) return res.json({ Status: false, Error: "Error hashing password" });
+        if (err) {
+            console.error("Password hashing error:", err);
+            return res.status(500).json({ Status: false, Error: "Error hashing password" });
+        }
 
         const sql = "INSERT INTO admin (email, password, address, dob, image, name) VALUES (?)";
         const values = [
@@ -89,14 +92,16 @@ router.post("/signup", upload.single("image"), (req, res) => {
         ];
 
         con.query(sql, [values], (err, result) => {
-            if (err) return handleSQLError(err, res, "Database error during signup");
+            if (err) {
+                console.error("Database error:", err);
+                return res.status(500).json({ Status: false, Error: "Database error during signup" });
+            }
             return res.json({ Status: true, Message: "Admin registered successfully!" });
         });
     });
 });
 
-// Edit an admin record
-router.put('/edit/:id', async (req, res) => {
+router.put('/edit/:id',authenticateToken, async (req, res) => {
     const adminId = req.params.id;
     const { email, address, dob, name } = req.body;
 
@@ -113,7 +118,6 @@ router.put('/edit/:id', async (req, res) => {
     });
 });
 
-// Delete an admin record
 router.delete('/delete_admin/:id', (req, res) => {
     const id = req.params.id;
     const sql = "DELETE FROM admin WHERE id = ?";
@@ -126,21 +130,35 @@ router.delete('/delete_admin/:id', (req, res) => {
     });
 });
 
-router.get('/admin/:id', authenticateToken, (req, res) => {
+
+
+
+
+router.get('/profile/:id', (req, res) => {
     const adminId = req.params.id;
-    if (isNaN(adminId)) return res.status(400).json({ message: "Invalid admin ID" });
+    console.log("Admin ID received:", adminId); 
+
+    if (isNaN(adminId)) {
+        console.log("Invalid admin ID"); 
+        return res.status(400).json({ message: "Invalid admin ID" });
+    }
 
     const sql = "SELECT * FROM admin WHERE id = ?";
     con.query(sql, [adminId], (err, results) => {
-        if (err) return res.status(500).json({ message: "Internal server error" });
-        if (results.length === 0) return res.status(404).json({ message: "Admin not found" });
+        if (err) {
+            console.error("Database error:", err); 
+            return res.status(500).json({ message: "Internal server error" });
+        }
+        if (results.length === 0) {
+            console.log("No admin found for ID:", adminId); 
+            return res.status(404).json({ message: "Admin not found" });
+        }
+        console.log("Admin found:", results[0]); 
         res.status(200).json({ message: "Admin details fetched successfully", data: results[0] });
     });
 });
 
 
-
-// Category Routes
 router.get('/category', (req, res) => {
     const sql = "SELECT * FROM category";
     con.query(sql, (err, result) => {
@@ -149,7 +167,7 @@ router.get('/category', (req, res) => {
     });
 });
 
-router.post('/add_category', (req, res) => {
+router.post('/add_category',authenticateToken, (req, res) => {
     const sql = "INSERT INTO category (name) VALUES (?)";
     con.query(sql, [req.body.category], (err, result) => {
         if (err) return handleSQLError(err, res);
@@ -157,7 +175,7 @@ router.post('/add_category', (req, res) => {
     });
 });
 
-router.delete('/delete_category/:id', (req, res) => {
+router.delete('/delete_category/:id',authenticateToken, (req, res) => {
     const id = req.params.id;
     const sql = "DELETE FROM category WHERE id = ?";
     con.query(sql, [id], (err, result) => {
@@ -166,7 +184,7 @@ router.delete('/delete_category/:id', (req, res) => {
     });
 });
 
-// Employee Routes
+
 router.post('/add_employee', upload.single('image'), (req, res) => {
     const sql = `INSERT INTO employee 
     (name, email, password, address, salary, image, category_id, dob) 
@@ -240,7 +258,7 @@ router.delete('/delete_employee/:id', (req, res) => {
     });
 });
 
-// Count Routes
+
 router.get('/admin_count', (req, res) => {
     const sql = "SELECT COUNT(id) AS admin FROM admin";
     con.query(sql, (err, result) => {
@@ -265,7 +283,7 @@ router.get('/salary_count', (req, res) => {
     });
 });
 
-// Admin Records
+
 router.get('/admin_records', (req, res) => {
     const sql = "SELECT * FROM admin";
     con.query(sql, (err, result) => {
@@ -274,7 +292,7 @@ router.get('/admin_records', (req, res) => {
     });
 });
 
-// Logout
+
 router.get('/logout', (req, res) => {
     res.clearCookie('token');
     return res.json({ Status: true });

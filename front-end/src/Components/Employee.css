@@ -1,0 +1,9 @@
+.table thead {
+  background-color: blue;
+  color: white;
+}
+
+.table tbody {
+  background-color: black;
+  color: white;
+}

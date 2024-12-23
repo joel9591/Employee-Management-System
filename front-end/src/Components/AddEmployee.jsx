@@ -1,6 +1,7 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import "bootstrap-icons/font/bootstrap-icons.css";
 
 const AddEmployee = () => {
   const [employee, setEmployee] = useState({
@@ -18,7 +19,7 @@ const AddEmployee = () => {
 
   useEffect(() => {
     axios
-      .get("https://employee-management-backend-flhu.onrender.com/auth/category")
+      .get(`${process.env.REACT_APP_API_URL}/auth/category`)
       .then((result) => {
         if (result.data.Status) {
           setCategory(result.data.Result);
@@ -42,7 +43,7 @@ const AddEmployee = () => {
     formData.append("category_id", employee.category_id);
 
     axios
-      .post("https://employee-management-backend-flhu.onrender.com/auth/add_employee", formData)
+      .post(`${process.env.REACT_APP_API_URL}/auth/add_employee`, formData)
       .then((result) => {
         if (result.data.Status) {
           navigate("/dashboard/employee");
@@ -54,17 +55,17 @@ const AddEmployee = () => {
   };
 
   return (
-    <div className="d-flex justify-content-center align-items-center mt-3">
-      <div className="p-3 rounded w-50 border">
-        <h3 className="text-center">Add Employee</h3>
+    <div className="d-flex justify-content-center align-items-center mt-3 text-white">
+      <div className="p-3 pb-1 rounded w-50 border">
+        <h4 className="text-center">Add Employee</h4>
         <form className="row g-1" onSubmit={handleSubmit}>
           <div className="col-12">
             <label for="inputName" className="form-label">
-              Name
+              Name*
             </label>
             <input
               type="text"
-              className="form-control rounded-0"
+              className="form-control rounded-1"
               id="inputName"
               placeholder="Enter Name"
               onChange={(e) =>
@@ -74,11 +75,11 @@ const AddEmployee = () => {
           </div>
           <div className="col-12">
             <label for="inputEmail4" className="form-label">
-              Email
+              Email*
             </label>
             <input
               type="email"
-              className="form-control rounded-0"
+              className="form-control rounded-1"
               id="inputEmail4"
               placeholder="Enter Email"
               autoComplete="off"
@@ -89,11 +90,11 @@ const AddEmployee = () => {
           </div>
           <div className="col-12">
             <label for="inputPassword4" className="form-label">
-              Password
+              Password*
             </label>
             <input
               type="password"
-              className="form-control rounded-0"
+              className="form-control rounded-1"
               id="inputPassword4"
               placeholder="Enter Password"
               onChange={(e) =>
@@ -101,11 +102,11 @@ const AddEmployee = () => {
               }
             />
             <label for="inputSalary" className="form-label">
-              Salary
+              Salary*
             </label>
             <input
               type="text"
-              className="form-control rounded-0"
+              className="form-control rounded-1"
               id="inputSalary"
               placeholder="Enter Salary"
               autoComplete="off"
@@ -116,11 +117,11 @@ const AddEmployee = () => {
           </div>
           <div className="col-12">
             <label htmlFor="inputDOB" className="form-label">
-              Date of Birth
+              Date of Birth*
             </label>
             <input
               type="date"
-              className="form-control rounded-0"
+              className="form-control rounded-1"
               id="inputDOB"
               onChange={(e) =>
                 setEmployee({ ...employee, dob: e.target.value })
@@ -129,11 +130,11 @@ const AddEmployee = () => {
           </div>
           <div className="col-12">
             <label for="inputAddress" className="form-label">
-              Address
+              Address*
             </label>
             <input
               type="text"
-              className="form-control rounded-0"
+              className="form-control rounded-1"
               id="inputAddress"
               placeholder="1234 Main St"
               autoComplete="off"
@@ -144,7 +145,7 @@ const AddEmployee = () => {
           </div>
           <div className="col-12">
             <label for="category" className="form-label">
-              Category
+            Category*
             </label>
             <select
               name="category"
@@ -159,13 +160,13 @@ const AddEmployee = () => {
               })}
             </select>
           </div>
-          <div className="col-12 mb-3">
+          <div className="col-12 mb-1">
             <label className="form-label" for="inputGroupFile01">
               Select Image
             </label>
             <input
               type="file"
-              className="form-control rounded-0"
+              className="form-control rounded-1"
               id="inputGroupFile01"
               name="image"
               onChange={(e) =>
@@ -173,8 +174,8 @@ const AddEmployee = () => {
               }
             />
           </div>
-          <div className="col-12">
-            <button type="submit" className="btn btn-primary w-100">
+          <div className="text-center">
+            <button type="submit" className="btn btn-primary w-12">
               Add Employee
             </button>
           </div>

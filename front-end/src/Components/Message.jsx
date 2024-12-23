@@ -1,18 +1,19 @@
-// src/components/Message.jsx
 import React, { useEffect, useState } from "react";
 import axios from "axios";
+import "bootstrap-icons/font/bootstrap-icons.css";
+import "./Message.css";
 
 const Message = () => {
   const [messages, setMessages] = useState([]);
   const [messageText, setMessageText] = useState("");
-  const [receiverId, setReceiverId] = useState(""); // ID of the user to whom the message is sent
-  const userId = 1; // Replace with the logged-in user’s ID
+  const [receiverId, setReceiverId] = useState(""); 
+  const userId = 1; 
 
-  // Fetch messages between the logged-in user and selected receiver
+  
   useEffect(() => {
     if (receiverId) {
       axios
-        .get(`https://employee-management-backend-flhu.onrender.com/messages/${userId}/${receiverId}`)
+        .get(`${process.env.REACT_APP_API_URL}/messages/${userId}/${receiverId}`)
         .then((res) => {
           if (res.data.Status) {
             setMessages(res.data.Messages);
@@ -24,20 +25,19 @@ const Message = () => {
           console.error("Error fetching messages:", error);
         });
     }
-  }, [receiverId]); // Reload messages when the receiverId changes
+  }, [receiverId]); 
 
-  // Send a new message
+ 
   const sendMessage = () => {
     if (messageText.trim() !== "") {
       axios
-        .post("https://employee-management-backend-flhu.onrender.com/messages/send", {
+        .post(`${process.env.REACT_APP_API_URL}/messages/send`, {
           sender_id: userId,
           receiver_id: receiverId,
           message_text: messageText,
         })
         .then((res) => {
           if (res.data.Status) {
-            // Update messages locally to display the sent message immediately
             setMessages((prev) => [
               ...prev,
               {
@@ -47,7 +47,7 @@ const Message = () => {
                 timestamp: new Date().toISOString(),
               },
             ]);
-            setMessageText(""); // Clear input field
+            setMessageText(""); 
           } else {
             alert("Message failed to send");
           }
@@ -57,20 +57,19 @@ const Message = () => {
             "Error sending message:",
             error.response ? error.response.data : error.message
           );
-          console.log("Detailed Error:", error.response?.data); // Log detailed error response
+          console.log("Detailed Error:", error.response?.data); 
           alert("Error sending message");
         });
     }
   };
 
   return (
-    <div className="message-container">
-      {/* Message display */}
-      <div className="message-list">
+    <div className="message-container border-0 bg-dark text-white">
+      <div className="message-list bg-dark text-dark width-fit" style={{ maxHeight: '80vh', overflowY: 'auto' }}>
         {messages.map((msg, idx) => (
           <div
             key={idx}
-            className={`message-item ${
+            className=  {`message-item ${
               msg.sender_id === userId ? "sent" : "received"
             }`}
           >
@@ -80,15 +79,15 @@ const Message = () => {
         ))}
       </div>
 
-      {/* Message input */}
-      <div className="message-input">
-        <input
+      <div className="message-input bg-white rounded-top d-flex align-items-center position-fixed bottom-0 custom-width p-20 m-10">
+        <input 
           type="text"
           value={messageText}
           onChange={(e) => setMessageText(e.target.value)}
           placeholder="Type a message..."
+          className="form-control me-2 w-75 border-none "
         />
-        <button onClick={sendMessage}>Send</button>
+        <button className="btn btn-success rounded-md p-20 " onClick={sendMessage}>Send</button>
       </div>
     </div>
   );

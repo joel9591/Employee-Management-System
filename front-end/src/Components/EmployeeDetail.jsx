@@ -1,6 +1,7 @@
 import axios from 'axios'
 import React, { useEffect, useState } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
+import "./Dashboard.css";
 
 
 const EmployeeDetail = () => {
@@ -8,14 +9,14 @@ const EmployeeDetail = () => {
     const {id} = useParams()
     const navigate = useNavigate()
     useEffect(() => {
-        axios.get("https://employee-management-backend-flhu.onrender.com/employee/detail/"+id)
+        axios.get(`${process.env.REACT_APP_API_URL}/employee/detail/`+id)
         .then(result => {
             setEmployee(result.data[0])
         })
         .catch(err => console.log(err))
     }, [])
     const handleLogout = () => {
-        axios.get("https://employee-management-backend-flhu.onrender.com/employee/logout")
+        axios.get(`${process.env.REACT_APP_API_URL}/employee/logout`)
         .then(result => {
           if(result.data.Status) {
             localStorage.removeItem("valid")
@@ -24,12 +25,12 @@ const EmployeeDetail = () => {
         }).catch(err => console.log(err))
       }
   return (
-    <div>
-        <div className="p-2 d-flex justify-content-center shadow">
+    <div className=' emp-bg'>
+        <div className="p-2 d-flex justify-content-center shadow text-black bg-success">
             <h4>Emoployee Management System</h4>
         </div>
-        <div className='d-flex justify-content-center flex-column align-items-center mt-3'>
-            <img src={"https://employee-management-backend-flhu.onrender.com/Images/"+employee.image} className='emp_det_image'/>
+        <div className='d-flex justify-content-center flex-column align-items-center mt-3 '>
+            <img src={`${process.env.REACT_APP_API_URL}`+employee.image} className='emp_det_image'/>
             <div className='d-flex align-items-center flex-column mt-5'>
                 <h3>Name: {employee.name}</h3>
                 <h3>Email: {employee.email}</h3>
