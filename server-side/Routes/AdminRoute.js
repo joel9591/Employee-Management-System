@@ -75,6 +75,11 @@ router.post("/adminlogin", (req, res) => {
 router.post("/signup", upload.single("image"), (req, res) => {
     const { email, password, address, dob, name } = req.body;
 
+    // Check if password is provided
+    if (!password) {
+        return res.status(400).json({ Status: false, Error: "Password is required" });
+    }
+
     // Hash the password
     bcrypt.hash(password, 10, (err, hash) => {
         if (err) {
@@ -105,6 +110,7 @@ router.post("/signup", upload.single("image"), (req, res) => {
         });
     });
 });
+
 
 
 // router.post("/signup", upload.single("image"), (req, res) => {
