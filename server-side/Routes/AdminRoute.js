@@ -75,31 +75,66 @@ router.post("/adminlogin", (req, res) => {
 router.post("/signup", upload.single("image"), (req, res) => {
     const { email, password, address, dob, name } = req.body;
 
+    // Hash the password
     bcrypt.hash(password, 10, (err, hash) => {
         if (err) {
             console.error("Password hashing error:", err);
             return res.status(500).json({ Status: false, Error: "Error hashing password" });
         }
 
+        // SQL query to insert user into the database
         const sql = "INSERT INTO admin (email, password, address, dob, image, name) VALUES (?)";
         const values = [
             email,
             hash,
             address,
             dob,
-            req.file ? req.file.filename : null,
+            req.file ? req.file.filename : null,  // Check if file exists, otherwise set to null
             name
         ];
 
+        // Execute the query
         con.query(sql, [values], (err, result) => {
             if (err) {
                 console.error("Database error:", err);
                 return res.status(500).json({ Status: false, Error: "Database error during signup" });
             }
+
+            // Send success response
             return res.json({ Status: true, Message: "Admin registered successfully!" });
         });
     });
 });
+
+
+// router.post("/signup", upload.single("image"), (req, res) => {
+//     const { email, password, address, dob, name } = req.body;
+
+//     bcrypt.hash(password, 10, (err, hash) => {
+//         if (err) {
+//             console.error("Password hashing error:", err);
+//             return res.status(500).json({ Status: false, Error: "Error hashing password" });
+//         }
+
+//         const sql = "INSERT INTO admin (email, password, address, dob, image, name) VALUES (?)";
+//         const values = [
+//             email,
+//             hash,
+//             address,
+//             dob,
+//             req.file ? req.file.filename : null,
+//             name
+//         ];
+
+//         con.query(sql, [values], (err, result) => {
+//             if (err) {
+//                 console.error("Database error:", err);
+//                 return res.status(500).json({ Status: false, Error: "Database error during signup" });
+//             }
+//             return res.json({ Status: true, Message: "Admin registered successfully!" });
+//         });
+//     });
+// });
 
 router.put('/edit/:id',authenticateToken, async (req, res) => {
     const adminId = req.params.id;
