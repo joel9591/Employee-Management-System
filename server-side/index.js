@@ -13,7 +13,7 @@ const app = express();
 
 
 app.use(cors({
-    origin: [process.env.CLIENT_LINK , "employee-management-git-55b0f3-joelstalin76-gmailcoms-projects.vercel.app", "employee-management-system-5xrtzxra2.vercel.app"], 
+    origin: process.env.CLIENT_LINK , 
     methods: ['GET', 'POST', 'PUT', 'DELETE'],
     credentials: true
 }));

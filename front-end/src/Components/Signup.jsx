@@ -36,24 +36,25 @@ const Signup = () => {
     data.append("dob", formData.dob);
     data.append("name", formData.name);
 
+    const API_URL = process.env.REACT_APP_API_URL || "http://localhost:3000";
+    console.log("API URL:", process.env.REACT_APP_API_URL);
+
     axios
-      .post(`${process.env.REACT_APP_API_URL}/auth/signup`, data, {
-        withCredentials: true,
-      })
+      .post(`${API_URL}/auth/signup`, data, { withCredentials: true })
       .then((response) => {
         console.log("Signup successful:", response.data);
-        setSuccessMessage("Signup successful!"); 
-        setErrorMessage(""); 
+        setSuccessMessage("Signup successful!");
+        setErrorMessage("");
         setTimeout(() => {
-          navigate("/adminlogin"); 
+          navigate("/adminlogin");
         }, 1000);
       })
       .catch((error) => {
         console.error("There was an error!", error);
         setErrorMessage(
           error.response?.data.Error || "Signup failed. Please try again."
-        ); 
-        setSuccessMessage(""); 
+        );
+        setSuccessMessage("");
       });
   };
 
