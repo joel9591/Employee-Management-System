@@ -7,8 +7,11 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node index.js",
-    "build": "echo 'No build step required'"
+    "build": "npm install && echo 'No build step required'"
   },
+  "engines": {
+  "node": "21.7.1"  
+},
   "keywords": [],
   "author": "",
   "license": "ISC",
