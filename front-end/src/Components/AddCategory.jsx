@@ -9,7 +9,7 @@ const AddCategory = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     axios
-      .post(`${process.env.REACT_APP_API_URL}/auth/add_category`, { category })
+      .post(`https://employee-management-system-9jz6.onrender.com/auth/add_category`, { category })
       .then((result) => {
         if (result.data.Status) {
           navigate("/dashboard/category");

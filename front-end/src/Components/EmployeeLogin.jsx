@@ -21,7 +21,7 @@ const EmployeeLogin = () => {
     }
 
     axios
-      .post(`${process.env.REACT_APP_API_URL}/employee/employee_login`, values)
+      .post(`https://employee-management-system-9jz6.onrender.com/employee/employee_login`, values)
       .then((result) => {
         if (result.data.loginStatus) {
           localStorage.setItem("valid", true);

@@ -19,7 +19,7 @@ const Home = () => {
   }, []);
 
   const adminRecords = () => {
-    axios.get(`${process.env.REACT_APP_API_URL}/auth/admin_records`).then((result) => {
+    axios.get(`https://employee-management-system-9jz6.onrender.com/auth/admin_records`).then((result) => {
       if (result.data.Status) {
         setAdmins(result.data.Result);
       } else {
@@ -29,7 +29,7 @@ const Home = () => {
   };
 
   const adminCount = () => {
-    axios.get(`${process.env.REACT_APP_API_URL}/auth/admin_count`).then((result) => {
+    axios.get(`https://employee-management-system-9jz6.onrender.com/auth/admin_count`).then((result) => {
       if (result.data.Status) {
         setAdminTotal(result.data.Result[0].admin);
       }
@@ -37,7 +37,7 @@ const Home = () => {
   };
 
   const employeeCount = () => {
-    axios.get(`${process.env.REACT_APP_API_URL}/auth/employee_count`).then((result) => {
+    axios.get(`https://employee-management-system-9jz6.onrender.com/auth/employee_count`).then((result) => {
       if (result.data.Status) {
         setEmployeeTotal(result.data.Result[0].employee);
       }
@@ -45,7 +45,7 @@ const Home = () => {
   };
 
   const salaryCount = () => {
-    axios.get(`${process.env.REACT_APP_API_URL}/auth/salary_count`).then((result) => {
+    axios.get(`https://employee-management-system-9jz6.onrender.com/auth/salary_count`).then((result) => {
       if (result.data.Status) {
         setSalaryTotal(result.data.Result[0].salaryOFEmp);
       } else {
@@ -70,7 +70,7 @@ const Home = () => {
   const deleteAdmin = async (adminId) => {
     try {
       const response = await axios.delete(
-        `${process.env.REACT_APP_API_URL}/auth/delete_admin/${adminId}` 
+        `https://employee-management-system-9jz6.onrender.com/auth/delete_admin/${adminId}` 
       );
       if (response.data.Status) {
         alert("Admin deleted successfully");

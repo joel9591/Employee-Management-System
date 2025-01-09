@@ -13,7 +13,7 @@ const Message = () => {
   useEffect(() => {
     if (receiverId) {
       axios
-        .get(`${process.env.REACT_APP_API_URL}/messages/${userId}/${receiverId}`)
+        .get(`https://employee-management-system-9jz6.onrender.com/messages/${userId}/${receiverId}`)
         .then((res) => {
           if (res.data.Status) {
             setMessages(res.data.Messages);
@@ -31,7 +31,7 @@ const Message = () => {
   const sendMessage = () => {
     if (messageText.trim() !== "") {
       axios
-        .post(`${process.env.REACT_APP_API_URL}/messages/send`, {
+        .post(`https://employee-management-system-9jz6.onrender.com/messages/send`, {
           sender_id: userId,
           receiver_id: receiverId,
           message_text: messageText,

@@ -19,7 +19,7 @@ const Profile = () => {
     const fetchAdmin = async () => {
       try {
         const response = await axios.get(
-          `${process.env.REACT_APP_API_URL}/auth/profile/${adminId}`
+          `https://employee-management-system-9jz6.onrender.com/auth/profile/${adminId}`
         );
         setAdmin(response.data.data || {});
       } catch (err) {
@@ -41,7 +41,7 @@ const Profile = () => {
       <div className="d-flex flex-column align-items-center">
         <div className="mb-4">
           <img
-            src={`${process.env.REACT_APP_API_URL}/Images/` + admin.image}
+            src={`https://employee-management-system-9jz6.onrender.com/Images/` + admin.image}
             alt="Admin"
             className="img-fluid rounded-circle shadow"
             style={{ maxWidth: "250px", height: "250px" }}

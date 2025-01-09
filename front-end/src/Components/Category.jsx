@@ -10,7 +10,7 @@ const Category = () => {
     }, []);
 
     const fetchCategories = () => {
-        axios.get(`${process.env.REACT_APP_API_URL}/auth/category`)
+        axios.get(`https://employee-management-system-9jz6.onrender.com/auth/category`)
             .then(result => {
                 if (result.data.Status) {
                     setCategory(result.data.Result);
@@ -22,7 +22,7 @@ const Category = () => {
     };
 
     const handleDelete = (id) => {
-      axios.delete(`${process.env.REACT_APP_API_URL}/auth/delete_category/${id}`)
+      axios.delete(`https://employee-management-system-9jz6.onrender.com/auth/delete_category/${id}`)
       .then(result => {
           if (result.data.Status) {
               setCategory(category.filter(c => c.id !== id));

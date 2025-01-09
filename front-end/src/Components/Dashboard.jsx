@@ -20,7 +20,7 @@ const Dashboard = () => {
 
   const handleLogout = async () => {
     try {
-      const result = await axios.get(`${process.env.REACT_APP_API_URL}/auth/logout`);
+      const result = await axios.get(`https://employee-management-system-9jz6.onrender.com/auth/logout`);
       if (result.data.Status) {
         localStorage.removeItem("valid");
         localStorage.removeItem("adminId"); 

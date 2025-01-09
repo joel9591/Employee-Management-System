@@ -7,7 +7,7 @@ const Start = () => {
   axios.defaults.withCredentials = true;
 
   useEffect(() => {
-    axios.get(`${process.env.REACT_APP_API_URL}/verify`)
+    axios.get(`https://employee-management-system-9jz6.onrender.com/verify`)
     .then(result => {
       if(result.data.Status) {
         if(result.data.role === "admin") {
