@@ -36,8 +36,7 @@ const Signup = () => {
     data.append("dob", formData.dob);
     data.append("name", formData.name);
 
-    const API_URL = process.env.REACT_APP_API_URL || "http://localhost:3000";
-    console.log("API URL:", process.env.REACT_APP_API_URL);
+    const API_URL = "https://employee-management-system-9jz6.onrender.com" ;
 
     axios
       .post(`${API_URL}/auth/signup`, data, { withCredentials: true })
