@@ -38,12 +38,20 @@ const AddEmployee = () => {
     formData.append("password", employee.password);
     formData.append("address", employee.address);
     formData.append("salary", employee.salary);
-    formData.append('dob', employee.dob);
+    formData.append("dob", employee.dob);
     formData.append("image", employee.image);
     formData.append("category_id", employee.category_id);
 
     axios
-      .post(`https://employee-management-system-9jz6.onrender.com/auth/add_employee`, formData)
+      .post(
+        `https://employee-management-system-9jz6.onrender.com/auth/add_employee`,
+        formData,
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        }
+      )
       .then((result) => {
         if (result.data.Status) {
           navigate("/dashboard/employee");
@@ -145,14 +153,17 @@ const AddEmployee = () => {
           </div>
           <div className="col-12">
             <label for="category" className="form-label">
-            Category*
+              Category*
             </label>
             <select
               name="category"
               id="category"
               className="form-select"
               onChange={(e) =>
-                setEmployee({ ...employee, category_id: parseInt(e.target.value) })
+                setEmployee({
+                  ...employee,
+                  category_id: parseInt(e.target.value),
+                })
               }
             >
               <option value="">Select Category</option>
