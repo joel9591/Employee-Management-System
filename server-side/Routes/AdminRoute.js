@@ -227,27 +227,40 @@ router.delete('/delete_category/:id',authenticateToken, (req, res) => {
 
 
 router.post('/add_employee', upload.single('image'), (req, res) => {
-    const sql = `INSERT INTO employee 
-    (name, email, password, address, salary, image, category_id, dob) 
-    VALUES (?)`;
-    
-    bcrypt.hash(req.body.password, 10, (err, hash) => {
-        if (err) return handleSQLError(err, res, "Error hashing employee password");
-        
+    const { name, email, password, address, salary, category_id, dob } = req.body;
+    if (!name || !email || !password || !address || !salary || !category_id || !dob) {
+        return res.status(400).json({ Status: false, Error: "All fields are required" });
+    }
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(email)) {
+        return res.status(400).json({ Status: false, Error: "Invalid email format" });
+    }
+    bcrypt.hash(password, 10, (err, hash) => {
+        if (err) {
+            console.error("Password hashing error:", err);
+            return res.status(500).json({ Status: false, Error: "Error hashing password" });
+        }
         const values = [
-            req.body.name,
-            req.body.email,
+            name,
+            email,
             hash,
-            req.body.address,
-            req.body.salary,
-            req.file ? req.file.filename : null,
-            req.body.category_id,
-            req.body.dob
+            address,
+            salary,
+            req.file ? req.file.filename : null, 
+            category_id,
+            dob
         ];
+        const sql = `INSERT INTO employee 
+            (name, email, password, address, salary, image, category_id, dob) 
+            VALUES (?)`;
 
         con.query(sql, [values], (err, result) => {
-            if (err) return handleSQLError(err, res);
-            return res.json({ Status: true });
+            if (err) {
+                console.error("Database error:", err);
+                return res.status(500).json({ Status: false, Error: "Database error during employee addition", Details: err.message });
+            }
+
+            return res.json({ Status: true, EmployeeId: result.insertId });
         });
     });
 });
