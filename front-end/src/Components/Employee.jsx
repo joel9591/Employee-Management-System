@@ -58,8 +58,8 @@ const Employee = () => {
                 <td>{e.name}</td>
                 <td>
                   <img
-                    src={`${process.env.REACT_APP_API_URL}/Images/` + e.image}
-                    className="employee_image"
+                    src={`https://employee-management-system-9jz6.onrender.com/Images/${e.image}`}
+                    className="employee_image" alt={e.name}
                   />
                 </td>
                 <td>{e.email}</td>
