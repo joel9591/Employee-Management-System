@@ -27,7 +27,6 @@ const Login = () => {
         if (result.data.loginStatus) {
           localStorage.setItem("valid", true);
           localStorage.setItem("adminId", result.data.adminId); 
-          console.log("Admin ID saved:", result.data.adminId);
           navigate("/dashboard");
         } else {
           setError(result.data.Error || "Invalid login details.");

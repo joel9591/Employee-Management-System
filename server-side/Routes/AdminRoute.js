@@ -25,7 +25,7 @@ function authenticateToken(req, res, next) {
     const token = req.headers['authorization']?.split(' ')[1];
     if (!token) return res.sendStatus(401);
 
-    jwt.verify(token, process.env.JWT_SECRET, (err, user) => {
+    jwt.verify(token, "joel123", (err, user) => {
         if (err) return res.sendStatus(403);
         req.user = user;
         next();
@@ -53,7 +53,7 @@ router.post("/adminlogin", (req, res) => {
                 if (isMatch) {
                     const token = jwt.sign(
                         { role: "admin", email: result[0].email, id: result[0].id },
-                        process.env.JWT_SECRET,
+                        "joel123",
                         { expiresIn: "1d" }
                     );
                     res.cookie("token", token, { httpOnly: true, secure: false });
