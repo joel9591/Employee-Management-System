@@ -208,7 +208,7 @@ router.get('/category', (req, res) => {
     });
 });
 
-router.post('/add_category',authenticateToken, (req, res) => {
+router.post('/add_category', (req, res) => {
     const sql = "INSERT INTO category (name) VALUES (?)";
     con.query(sql, [req.body.category], (err, result) => {
         if (err) return handleSQLError(err, res);
@@ -216,7 +216,7 @@ router.post('/add_category',authenticateToken, (req, res) => {
     });
 });
 
-router.delete('/delete_category/:id',authenticateToken, (req, res) => {
+router.delete('/delete_category/:id', (req, res) => {
     const id = req.params.id;
     const sql = "DELETE FROM category WHERE id = ?";
     con.query(sql, [id], (err, result) => {
