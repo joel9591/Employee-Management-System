@@ -56,7 +56,7 @@ router.post("/adminlogin", (req, res) => {
                         "joel123",
                         { expiresIn: "1d" }
                     );
-                    res.cookie("token", token, { httpOnly: true, secure: false });
+                    res.cookie("token", token, { httpOnly: true, secure: true });
                     return res.status(200).json({
                         loginStatus: true,
                         adminId: result[0].id, 
