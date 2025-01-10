@@ -228,13 +228,13 @@ router.delete('/delete_category/:id',authenticateToken, (req, res) => {
 
 router.post('/add_employee', upload.single('image'), (req, res) => {
     const { name, email, password, address, salary, category_id, dob } = req.body;
-    if (!name || !email || !password || !address || !salary || !category_id || !dob) {
-        return res.status(400).json({ Status: false, Error: "All fields are required" });
-    }
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    if (!emailRegex.test(email)) {
-        return res.status(400).json({ Status: false, Error: "Invalid email format" });
-    }
+    // if (!name || !email || !password || !address || !salary || !category_id || !dob) {
+    //     return res.status(400).json({ Status: false, Error: "All fields are required" });
+    // }
+    // const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    // if (!emailRegex.test(email)) {
+    //     return res.status(400).json({ Status: false, Error: "Invalid email format" });
+    // }
     bcrypt.hash(password, 10, (err, hash) => {
         if (err) {
             console.error("Password hashing error:", err);
