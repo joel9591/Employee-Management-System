@@ -152,9 +152,10 @@ const AddEmployee = () => {
               id="category"
               className="form-select"
               onChange={(e) =>
-                setEmployee({ ...employee, category_id: e.target.value })
+                setEmployee({ ...employee, category_id: parseInt(e.target.value) })
               }
             >
+              <option value="">Select Category</option>
               {category.map((c) => {
                 return <option value={c.id}>{c.name}</option>;
               })}

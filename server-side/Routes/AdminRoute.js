@@ -247,7 +247,7 @@ router.post('/add_employee', upload.single('image'), (req, res) => {
             address,
             salary,
             req.file ? req.file.filename : null, 
-            category_id,
+            parseInt(category_id),
             dob
         ];
         const sql = `INSERT INTO employee 
